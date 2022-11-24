@@ -6,3 +6,4 @@ export 'package:dartus/src/model/teachingunit.dart' show TeachingUnit;
 export 'package:dartus/src/model/teacher.dart' show Teacher;
 export 'package:dartus/src/model/text.dart' show Text;
 export 'package:dartus/src/model/semester.dart' show Semester;
+export 'package:dartus/src/parser/parsedpage.dart' show ParsedPage;
