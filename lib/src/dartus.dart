@@ -1,6 +1,5 @@
 import 'package:beautiful_soup_dart/beautiful_soup.dart';
 import 'package:dartus/src/parser/parsedpage.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dartus/src/authentication/authentication.dart';
 import 'package:dartus/src/utils/urlcreator.dart';
 import 'package:dartus/src/parser/htmlparser.dart';
@@ -10,15 +9,14 @@ class Dartus {
 
   const Dartus(this._authentication);
 
-
   Authentication get authentication => _authentication;
 
   Future<bool> authenticate() async {
     return await _authentication.authenticate();
   }
 
-  Future<Option<ParsedPage>> getParsedPage(final String url) async {
-    if (!_authentication.isAuthenticated) return None();
+  Future<ParsedPage?> getParsedPage(final String url) async {
+    if (!_authentication.isAuthenticated) return null;
 
     String content = await _authentication.serviceRequest(url);
     final HTMLparser parser = HTMLparser();
@@ -32,18 +30,17 @@ class Dartus {
         content = await Future.sync(() => _authentication.serviceRequest(url));
         if (content.length > 1000) {
           parser.parse(content);
-          return Some(ParsedPage(
-              parser.extractSemesters(), parser.extractTeachingUnits()));
+          return ParsedPage(
+              parser.extractSemesters(), parser.extractTeachingUnits());
         } else {
-          return None();
+          return null;
         }
       });
     }
 
     parser.parse(content);
 
-    return Some(
-        ParsedPage(parser.extractSemesters(), parser.extractTeachingUnits()));
+    return ParsedPage(parser.extractSemesters(), parser.extractTeachingUnits());
   }
 
   Future<void> logout() async {
