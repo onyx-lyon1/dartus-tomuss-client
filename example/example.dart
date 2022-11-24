@@ -1,6 +1,5 @@
 import 'package:dartus/src/parser/parsedpage.dart';
 import 'package:dartus/tomuss.dart';
-import 'package:dartz/dartz.dart';
 
 void main() async {
   final Dartus tomuss = Dartus(Authentication("p1234567", "a_valid_password"));
@@ -10,16 +9,15 @@ void main() async {
     return;
   }
 
-  final Option<ParsedPage> parsedPageOpt =
+  final ParsedPage? parsedPageOpt =
       await tomuss.getParsedPage(Dartus.currentSemester());
 
-  if (parsedPageOpt.isNone()) {
+  if (parsedPageOpt == null) {
     print("There was an error while fetching Tomuss");
     return;
   }
 
-  final ParsedPage parsedPage =
-      parsedPageOpt.getOrElse(() => ParsedPage.empty());
+  final ParsedPage parsedPage = parsedPageOpt ?? ParsedPage.empty();
 
   // list teaching units
   for (final TeachingUnit tu in parsedPage.teachingunits) {

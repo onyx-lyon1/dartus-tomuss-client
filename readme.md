@@ -8,13 +8,13 @@ if (!await tomuss.authenticate()) {
     // handle gracefully
 }
 
-final Option<ParsedPage> parsedPageOpt = await tomuss.getParsedPage(Dartus.currentSemester());
+final ParsedPage? parsedPageOpt = await tomuss.getParsedPage(Dartus.currentSemester());
 
-if (parsedPageOpt.isNone()) {
+if (parsedPageOpt == null) {
     // handle gracefully
 }
 
-final ParsedPage parsedPage = parsedPageOpt.getOrElse(() => ParsedPage.empty());
+final ParsedPage parsedPage = parsedPageOpt ?? ParsedPage.empty();
 
 // list teaching units
 for (final TeachingUnit tu in parsedPage.teachingunits) {

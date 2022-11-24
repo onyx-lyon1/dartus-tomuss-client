@@ -1,6 +1,4 @@
-import 'package:dartus/src/parser/parsedpage.dart';
 import 'package:dartus/tomuss.dart';
-import 'package:dartz/dartz.dart';
 import 'package:test/test.dart';
 import 'package:dartus/src/utils/urlcreator.dart';
 
@@ -28,28 +26,26 @@ void main() async {
   });
 
   test('Dartus.getPage with wrong creds', () async {
-    final Option<ParsedPage> parsedPageOpt =
+    final ParsedPage? parsedPageOpt =
         await tomussBAD.getParsedPage(URLCreator.basic());
-
-    expect(parsedPageOpt.isNone(), equals(true));
+    expect(parsedPageOpt == null, equals(true));
   });
 
   test('Dartus.getPage', () async {
-    final Option<ParsedPage> parsedPageOpt =
+    final ParsedPage? parsedPageOpt =
         await tomussOK.getParsedPage(URLCreator.basic());
 
-    expect(parsedPageOpt.isSome(), equals(true));
-    final ParsedPage parsedPage =
-        parsedPageOpt.getOrElse(() => ParsedPage.empty());
+    expect(parsedPageOpt == null, equals(false));
+    final ParsedPage parsedPage = parsedPageOpt ?? ParsedPage.empty();
 
     expect(parsedPage.semesters.isNotEmpty, equals(true));
     expect(parsedPage.teachingunits.isNotEmpty, equals(true));
   });
 
   test('Dartus.getPage x2', () async {
-    final Option<ParsedPage> parsedPageOpt =
+    final ParsedPage? parsedPageOpt =
         await tomussOK.getParsedPage(URLCreator.basic());
-    expect(parsedPageOpt.isSome(), equals(true));
+    expect(parsedPageOpt == null, equals(false));
   }, timeout: Timeout.parse("5m"));
 
   // TODO: check edge values
