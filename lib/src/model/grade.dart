@@ -25,12 +25,12 @@ class Grade {
     _mediane = Round.round(stats[json['the_id']]['mediane']);
 
     _gradeNumerator =
-        (line.length > 0 && id < line.length - 1 && line[id].length > 0)
+        (line.length > 0 && id < line.length && line[id].length > 0)
             ? Round.round(double.tryParse(line[id][0].toString()))
             : double.nan;
 
     _gradeDenominator = double.tryParse(
-        (json['minmax'] ?? "").split(";").last.replaceAll("]", "") ??
+            (json['minmax'] ?? "").split(";").last.replaceAll("]", "") ??
                 "20") ??
         20; // "minmax": "[0;22]",
   }
