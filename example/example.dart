@@ -1,4 +1,3 @@
-import 'package:dartus/src/parser/parsedpage.dart';
 import 'package:dartus/tomuss.dart';
 
 void main() async {
@@ -17,7 +16,7 @@ void main() async {
     return;
   }
 
-  final ParsedPage parsedPage = parsedPageOpt ?? ParsedPage.empty();
+  final ParsedPage parsedPage = parsedPageOpt;
 
   // list teaching units
   for (final TeachingUnit tu in parsedPage.teachingunits) {
