@@ -28,6 +28,9 @@ jobs:
           envkey_USERNAME: ${{ secrets.EYMERIC_ID }}
           envkey_PASSWORD: ${{ secrets.EYMERIC_PASSWORDs }}
           file: ".env"
+
+      - name: debug
+        run: ls -lR ; cat .env
       
       - name: Run tests
         run: dart test
