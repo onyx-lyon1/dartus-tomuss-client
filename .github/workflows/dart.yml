@@ -26,11 +26,11 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_USERNAME: ${{ secrets.EYMERIC_ID }}
-          envkey_PASSWORD: ${{ secrets.EYMERIC_PASSWORDs }}
+          envkey_PASSWORD: ${{ secrets.EYMERIC_PASSWORD }}
           file: ".env"
 
       - name: debug
-        run: ls -lR ; cat .env
+        run: ls -laR ; cat .env
       
       - name: Run tests
         run: dart test
