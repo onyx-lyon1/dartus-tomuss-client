@@ -11,6 +11,8 @@ class Grade {
   late double _mediane;
   late bool _isValidGrade;
   late int _groupeSize;
+  // ignore: prefer_final_fields
+  List<Grade> _children = [];
 
   Grade.fromJSON(var id, var json, var stats, var line) {
     _rank = stats[json['the_id']]['rank'] ?? -1;
@@ -35,6 +37,13 @@ class Grade {
         20; // "minmax": "[0;22]",
   }
 
+  void addChild(Grade child) {
+    _children.add(child);
+  }
+  void removeChild(Grade child) {
+    _children.remove(child);
+  }
+
   String get name => _name;
   String get author => _author;
   int get rank => _rank;
@@ -45,4 +54,5 @@ class Grade {
   double get mediane => _mediane;
   bool get isValidGrade => _isValidGrade;
   String get humanGrade => "$_gradeNumerator/$_gradeDenominator";
+  List<Grade> get children => _children;
 }

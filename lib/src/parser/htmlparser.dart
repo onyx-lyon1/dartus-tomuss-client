@@ -46,9 +46,9 @@ class HTMLparser {
 
     final List<TeachingUnit> units = [];
     for (var unit in json[key][1][0]) {
-      final line = unit['line']; // grade value
-      final stats = unit['stats']; // grade statistics: rank, mediane, average
-      final columns = unit['columns']; // grade name
+      List line = unit['line']; // grade value
+      Map<String, dynamic> stats = unit['stats']; // grade statistics: rank, mediane, average
+      List columns = unit['columns']; // grade name
 
       final List<Teacher> masters = [];
       unit['masters'].forEach((item) => {masters.add(Teacher.fromJSON(item))});
@@ -56,7 +56,7 @@ class HTMLparser {
       final List<Grade> grades = [];
       final List<Text> texts = [];
       int id = 0;
-      columns.forEach((item) {
+      for (var item in columns) {
         if (item['type']
             .toString()
             .contains(RegExp('note|moy|cow', caseSensitive: false))) {
@@ -67,7 +67,22 @@ class HTMLparser {
           (text.isValidText) ? texts.add(text) : null;
         }
         id++;
-      });
+      }
+      //move children to their parents
+      List<Grade> childToRemoveLater = [];
+      for (var grade in grades) {
+        var column = columns.firstWhere((element) => element['title'] == grade.name);
+        if (column.keys.contains("columns")){
+          print(column);
+          for (var i in column["columns"].split(" ")){
+            Grade child = grades.firstWhere((element) => element.name == i);
+            grade.addChild(child);
+            childToRemoveLater.add(child);
+          }
+        }
+      }
+      //remove children from the grades list
+      grades.removeWhere((element) => childToRemoveLater.contains(element));
 
       units
           .add(TeachingUnit(unit['table_title'] ?? "", masters, grades, texts));
