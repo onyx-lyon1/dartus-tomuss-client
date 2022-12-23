@@ -1,6 +1,8 @@
 # Dartus: a Dart Tomuss Client
 This package allows you to login and fetch teaching units from Tomuss (https://tomuss.univ-lyon1.fr).
 
+![test result](https://github.com/onyx-lyon1/dartus-tomuss-client/actions/workflows/dart.yml/badge.svg)
+
 ## Example
 ```dart
 final Dartus tomuss = Dartus("p1234567", "a_valid_password");
